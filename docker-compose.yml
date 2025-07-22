@@ -1,22 +1,36 @@
+version: '3.9'
 
-version: "3.9"
 services:
+
   level1:
     build: ./level1_ret2win
     ports:
       - "2221:22"
     networks:
       - pwnnet
+    container_name: dockerized2025-level1
 
   level2:
-    build: ./level2_bof_stack
+    build:
+      context: ./level2_bof_stack
+      args:
+        PREV_FLAG: FLG_level1_XYZZY
+    ports:
+      - "2222:22"
     networks:
       - pwnnet
+    container_name: dockerized2025-level2
 
   level3:
-    build: ./level3_ret2libc
+    build:
+      context: ./level3_ret2libc
+      args:
+        PREV_FLAG: FLG_level2_KTHXBYE
+    ports:
+      - "2223:22"
     networks:
       - pwnnet
+    container_name: dockerized2025-level3
 
 networks:
   pwnnet:
