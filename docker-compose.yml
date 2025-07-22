@@ -1,0 +1,23 @@
+
+version: "3.9"
+services:
+  level1:
+    build: ./level1_ret2win
+    ports:
+      - "2221:22"
+    networks:
+      - pwnnet
+
+  level2:
+    build: ./level2_bof_stack
+    networks:
+      - pwnnet
+
+  level3:
+    build: ./level3_ret2libc
+    networks:
+      - pwnnet
+
+networks:
+  pwnnet:
+    driver: bridge
